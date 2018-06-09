@@ -1,1 +1,8 @@
+# Build worker image (VM template)
 image: Visual Studio 2017
+
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
+
+# version format
+version: 0.0.1.{build}
