@@ -6,3 +6,7 @@ configuration: Release
 
 # version format
 version: 0.0.1.{build}
+
+# scripts to run before build
+before_build:
+  - nuget restore
