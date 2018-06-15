@@ -7,6 +7,8 @@ configuration: Release
 # version format
 version: 0.0.1.{build}
 
-# scripts to run before build
-before_build:
-  - nuget restore
+# use custom cement build script
+build: off
+install:
+  - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/cement-build.ps1" -Out "cement-build.ps1"
+  - ps: ./cement-build.ps1 "testParameter"
