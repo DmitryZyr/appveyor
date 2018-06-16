@@ -15,19 +15,23 @@ dotnet_csproj:
   package_version: '{version}'
   assembly_version: '{version}'
   file_version: '{version}'
+
+before_build:
+  - ps: Write-Host "before_build"
   
 # use custom cement build script
-build: off
-install:
+#build: off
+build_script:
   - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/cement-install.ps1" -Out "cement-install.ps1"
-  - ps: ./cement-install.ps1
-  - cmd: cd .. & call %cm% init & cd %appveyor_build_folder%
-  - cmd: call %cm% update-deps -v
-  - cmd: call %cm% build-deps -v
-  - cmd: call %cm% build
+#  - ps: ./cement-install.ps1
+#  - cmd: cd .. & call %cm% init & cd %appveyor_build_folder%
+#  - cmd: call %cm% update-deps -v
+#  - cmd: call %cm% build-deps -v
+#  - cmd: call %cm% build
 
 after_test:
-  - ps: Get-ChildItem -Recurse -Filter "*.nuspec" | ForEach-Object {nuget pack $_.FullName -Version {version}}
+  - ps: Write-Host "$env:APPVEYOR_BUILD_VERSION"
+  - ps: Get-ChildItem -Recurse -Filter "*.nuspec" | ForEach-Object {nuget pack $_.FullName -Version "$env:APPVEYOR_BUILD_VERSION"}
 
 artifacts:
   - path: '**\*.nupkg'
