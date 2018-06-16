@@ -1,6 +1,15 @@
 # Build worker image (VM template)
 image: Visual Studio 2017
 
+version: 0.0.0.{build}
+
+# install cement and patch version
+install:
+  - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/cement-install.ps1" -Out "cement-install.ps1"
+  - ps: ./cement-install.ps1
+  - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/patch-appveyour-build-version.ps1" -Out "patch-appveyour-build-version.ps1"
+  - ps: ./patch-appveyour-build-version.ps1
+   
 # version patching
 assembly_info:
   patch: true
@@ -15,19 +24,13 @@ dotnet_csproj:
   package_version: '{version}'
   assembly_version: '{version}'
   file_version: '{version}'
-
-before_build:
-  - ps: Write-Host "before_build"
-  
-# use custom cement build script
-#build: off
+   
 build_script:
-  - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/cement-install.ps1" -Out "cement-install.ps1"
-#  - ps: ./cement-install.ps1
-#  - cmd: cd .. & call %cm% init & cd %appveyor_build_folder%
-#  - cmd: call %cm% update-deps -v
-#  - cmd: call %cm% build-deps -v
-#  - cmd: call %cm% build
+  - ps: Write-Host "$env:APPVEYOR_BUILD_VERSION"
+  - cmd: cd .. & call %cm% init & cd %appveyor_build_folder%
+  - cmd: call %cm% update-deps -v
+  - cmd: call %cm% build-deps -v
+  - cmd: call %cm% build
 
 after_test:
   - ps: Write-Host "$env:APPVEYOR_BUILD_VERSION"
