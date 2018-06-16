@@ -1,0 +1,6 @@
+full-build *default:
+  build:
+    target: src/TestAppveyor.sln
+    configuration: Release
+    tool:
+      name: dotnet
