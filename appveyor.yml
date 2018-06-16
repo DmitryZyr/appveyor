@@ -1,14 +1,15 @@
 # Build worker image (VM template)
 image: Visual Studio 2017
 
-# build Configuration, i.e. Debug, Release, etc.
-configuration: Release
-
 # version format
 version: 0.0.1.{build}
 
 # use custom cement build script
 build: off
 install:
-  - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/cement-build.ps1" -Out "cement-build.ps1"
-  - ps: ./cement-build.ps1 "testParameter"
+  - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/cement-install.ps1" -Out "cement-install.ps1"
+  - ps: ./cement-install.ps1
+  - cmd: cd .. & call %cm% init & cd %appveyor_build_folder%
+  - cmd: call %cm% update-deps -v
+  - cmd: call %cm% build-deps -v
+  - cmd: call %cm% build
