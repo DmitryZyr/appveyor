@@ -45,10 +45,15 @@ deploy:
     artifact: /.*\.nupkg/
     on:
       need_deploy_to_nuget: true
+
+  - provider: Environment
+    name: Nuget
+    on:
+      need_deploy_to_nuget: true
       
   # Deploy to GitHub Releases
   - provider: Environment
-    name: Github
+    name: GitHub
     artifact: /.*\.nupkg/
     on:
       need_deploy_to_github: true
