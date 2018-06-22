@@ -4,10 +4,10 @@ image: Visual Studio 2017
 # default appveyour version
 version: 0.0.0.{build}
 
-# install cement and patch appveyour version
+# install cement; patch appveyour version; init need_deploy_to_nuget & need_deploy_to_github variables
 install:
-  - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/patch-appveyour-build-version.ps1" -Out "patch-appveyour-build-version.ps1"
-  - ps: ./patch-appveyour-build-version.ps1
+  - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/init-deploy-variables.ps1" -Out "init-deploy-variables.ps1"
+  - ps: ./init-deploy-variables.ps1
   - ps: Invoke-WebRequest "https://raw.githubusercontent.com/DmitryZyr/appveyor/master/cement-install.ps1" -Out "cement-install.ps1"
   - ps: ./cement-install.ps1
 
@@ -44,11 +44,11 @@ deploy:
     name: FullNuget
     artifact: /.*\.nupkg/
     on:
-      branch: master
-
+      need_deploy_to_nuget: true
+      
   # Deploy to GitHub Releases
-  - provider: GitHub
+  - provider: Environment
+    name: Github
     artifact: /.*\.nupkg/
     on:
-      branch: master
-      appveyor_repo_tag: true
+      need_deploy_to_github: true
