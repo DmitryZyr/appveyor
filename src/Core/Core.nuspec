@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>CoreTests</id>
-    <version>1.1.0</version>
+    <id>Core</id>
+    <version>3.1.0</version>
     <authors>zyrianovdv</authors>
     <owners>zyrianovdv</owners>
     <licenseUrl>http://licenseUrl.ru</licenseUrl>
