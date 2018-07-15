@@ -1,5 +1,5 @@
 # build worker image (VM template)
-image: Visual Studio 2017
+image: ubuntu
 
 # default appveyour version
 version: 0.0.0.{build}
@@ -59,10 +59,14 @@ before_build:
       }
       
 build_script:
-  - cmd: cd .. & call %cm% init & cd %appveyor_build_folder%
-  - cmd: call %cm% update-deps -v
-  - cmd: call %cm% build-deps -v
-  - cmd: call %cm% build
+  - ps: | 
+      cd ..; dotnet "$env:APPVEYOR_BUILD_FOLDER/cement/dotnet/cm.exe" init; cd $env:appveyor_build_folder
+  - ps: | 
+      mono $env:cm update-deps -v
+  - ps: | 
+      mono $env:cm build-deps -v
+  - ps: | 
+      mono $env:cm build
 
 after_test:
   - ps: |
