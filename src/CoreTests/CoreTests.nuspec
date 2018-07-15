@@ -5,6 +5,7 @@
     <version>1.1.0</version>
     <authors>zyrianovdv</authors>
     <owners>zyrianovdv</owners>
+    <repository type="git" url="http://repositoryUrl.ru" />
     <licenseUrl>http://licenseUrl.ru</licenseUrl>
     <projectUrl>http://projectUrl.ru</projectUrl>
     <iconUrl>http://iconUrl.ru</iconUrl>
